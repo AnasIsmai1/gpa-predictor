@@ -1,9 +1,9 @@
 import PropTypes from "prop-types"
 import { FaBookOpen, FaArrowRight } from "react-icons/fa6";
 
-const Card = ({ color = "red", desc, main, icon }) => {
+const Card = ({ color = "red", desc, main, icon, number }) => {
     return (
-        <div className={`inline group my-10 w-[450px] bg-${color}-300 p-5 py-6 rounded-3xl flex flex-col justify-between`}>
+        <div className={`col-${number} inline group my-10 bg-${color}-300 p-5 py-6 rounded-3xl flex flex-col justify-between hover:cursor-pointer`}>
             <div className={`px-5 py-3 w-fit flex items-center gap-3 bg-white text-${color}-400 rounded-full p-2`}>
                 {!icon ?
                     <FaBookOpen size={24} className="group-hover:-translate-x-9 group-hover:opacity-0 transition-all ease duration-300" />
@@ -23,7 +23,8 @@ Card.propTypes = {
     color: PropTypes.string,
     desc: PropTypes.string,
     main: PropTypes.string,
-    icon: PropTypes.element
+    icon: PropTypes.element,
+    number: PropTypes.string
 }
 
 export default Card
