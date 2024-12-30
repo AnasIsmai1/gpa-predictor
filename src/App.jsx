@@ -1,15 +1,15 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import Home from "./pages/home"
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import CGPAPredictor from "./pages/home";
 
 function App() {
-
-    return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Home />} />
-            </Routes>
-        </BrowserRouter >
-    )
+  return (
+    <Router>
+      <Routes>
+        <Route path="/Home" element={<CGPAPredictor />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
