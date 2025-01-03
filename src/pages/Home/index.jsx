@@ -52,18 +52,27 @@ const CGPAPredictor = () => {
         subjects.forEach(({ creditHours, mid, final }) => {
             const total = parseFloat(mid || 0) + parseFloat(final || 0);
             const grade =
-                total >= 95
+                total > 85
                     ? 4.0
-                    : total >= 85
+                    : total >= 80
                         ? 3.7
-                        : total >= 75
+                        : total > 75
                             ? 3.3
-                            : total >= 65
+                            : total >= 72
                                 ? 3.0
-                                : total >= 55
+                                : total > 68
                                     ? 2.7
-                                    : 0;
-
+                                    : total >= 64
+                                        ? 2.30
+                                        : total >= 60
+                                            ? 2.00
+                                            : total >= 57
+                                                ? 1.70
+                                                : total >= 54
+                                                    ? 1.30
+                                                    : total >= 50
+                                                        ? 1.00
+                                                        : 0;
             totalPoints += grade * creditHours;
             totalCredits += creditHours;
             newGrades.push({ subject: `Subject ${newGrades.length + 1}`, grade });
@@ -79,13 +88,12 @@ const CGPAPredictor = () => {
             {
                 label: "Grades",
                 data: grades.map((grade) => grade.grade),
-                backgroundColor: [
-                    "#4CAF50",
-                    "#FFC107",
-                    "#F44336",
-                    "#17A2B8",
-                    "#6C757D",
-                ],
+                backgroundColor: grades.map((grade) => {
+                    if (grade.grade >= 3.7) return "#4CAF50"; // A
+                    if (grade.grade >= 2.7) return "#FFC107"; // B
+                    if (grade.grade >= 1.7) return "#FF9800"; // C
+                    return "#F44336"; // F
+                }),
             },
         ],
     };
@@ -118,7 +126,7 @@ const CGPAPredictor = () => {
                         </select>
                         <input
                             type="number"
-                            placeholder="Midterm Marks"
+                            placeholder="Mids and Sessional Marks"
                             value={subject.mid}
                             onChange={(e) =>
                                 handleInputChange(subject.id, "mid", e.target.value)
@@ -147,7 +155,7 @@ const CGPAPredictor = () => {
                 >
                     Calculate CGPA
                 </button>
-                <h2 className="text-center text-2xl text-[#1e1e1e] dark:text-yellow-400">Your CGPA: {cgpa}</h2>
+                <h2 className="text-center text-2xl text-[#1e1e1e] dark:text-yellow-400 mt-32">Your CGPA: {cgpa}</h2>
                 <div className="mt-10 bg-gray-100 dark:bg-[#1e1e1e] rounded-lg p-5 shadow-2xl">
                     <Bar
                         data={chartData}
