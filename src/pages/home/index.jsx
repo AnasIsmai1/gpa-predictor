@@ -12,6 +12,10 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import Excellent from "../../assets/images/Memes/maza-aaya.gif";
+import Good from "../../assets/images/Memes/2nd.gif";
+import Average from "../../assets/images/Memes/3rd.gif";
+import Poor from "../../assets/images/Memes/4th.gif";
 
 ChartJS.register(
   CategoryScale,
@@ -30,14 +34,15 @@ const CGPAPredictor = () => {
   const handleAddSubject = () => {
     setSubjects([
       ...subjects,
-      { id: Date.now(), creditHours: 3, sessional: "", mid: "", final: "" },
+      { id: Date.now(), creditHours: 3, mid: "", final: "" },
     ]);
   };
 
   const handleInputChange = (id, field, value) => {
+    const validatedValue = Math.min(50, Math.max(value));
     setSubjects((prevSubjects) =>
       prevSubjects.map((subject) =>
-        subject.id === id ? { ...subject, [field]: value } : subject
+        subject.id === id ? { ...subject, [field]: validatedValue } : subject
       )
     );
   };
@@ -51,26 +56,30 @@ const CGPAPredictor = () => {
     let totalCredits = 0;
     let newGrades = [];
 
-    subjects.forEach(({ creditHours, sessional, mid, final }) => {
-      const sessionalMarks = Math.min(parseFloat(sessional || 0), 25);
-      const midMarks = Math.min(parseFloat(mid || 0), 25);
-      const finalMarks = Math.min(parseFloat(final || 0), 50);
-
-      const total = sessionalMarks + midMarks + finalMarks;
-
+    subjects.forEach(({ creditHours, mid, final }) => {
+      const total = parseFloat(mid || 0) + parseFloat(final || 0);
       const grade =
-        total >= 95
+        total > 85
           ? 4.0
-          : total >= 85
+          : total >= 80
           ? 3.7
-          : total >= 75
+          : total > 75
           ? 3.3
-          : total >= 65
+          : total >= 72
           ? 3.0
-          : total >= 55
+          : total > 68
           ? 2.7
+          : total >= 64
+          ? 2.3
+          : total >= 60
+          ? 2.0
+          : total >= 57
+          ? 1.7
+          : total >= 54
+          ? 1.3
+          : total >= 50
+          ? 1.0
           : 0;
-
       totalPoints += grade * creditHours;
       totalCredits += creditHours;
       newGrades.push({ subject: `Subject ${newGrades.length + 1}`, grade });
@@ -86,22 +95,33 @@ const CGPAPredictor = () => {
       {
         label: "Grades",
         data: grades.map((grade) => grade.grade),
-        backgroundColor: [
-          "#4CAF50",
-          "#FFC107",
-          "#F44336",
-          "#17A2B8",
-          "#6C757D",
-        ],
+        backgroundColor: grades.map((grade) => {
+          if (grade.grade >= 3.7) return "#4CAF50"; // A
+          if (grade.grade >= 2.7) return "#FFC107"; // B
+          if (grade.grade >= 1.7) return "#FF9800"; // C
+          return "#F44336"; // F
+        }),
       },
     ],
+  };
+
+  const getMemeBasedOnCGPA = () => {
+    if (cgpa >= 3.7) {
+      return Excellent; // Excellent meme
+    } else if (cgpa >= 3.0) {
+      return Good; // Good meme
+    } else if (cgpa >= 2.0) {
+      return Average; // Okay meme
+    } else {
+      return Poor; // Failing meme
+    }
   };
 
   return (
     <>
       <Header />
       <div className="container mx-auto my-10">
-        <h1 className="text-center font-bold text-5xl animate-fadeInDown dark:text-yellow-400 ">
+        <h1 className="text-center font-bold text-5xl animate-fadeInDown dark:text-yellow-400">
           CGPA Predictor
         </h1>
         <button
@@ -120,7 +140,7 @@ const CGPAPredictor = () => {
               onChange={(e) =>
                 handleInputChange(subject.id, "creditHours", e.target.value)
               }
-              className="w-1/4 p-2 border-2 border-yellow-400 dark:border-yellow-400 rounded-md bg-gray-100 dark:bg-[#1e1e1e] text-[#1e1e1e] dark:text-yellow-400 focus:outline-none focus:border-white focus:transform focus:scale-105 scale-100 transition-all"
+              className="w-1/3 p-2 border-2 border-yellow-400 dark:border-yellow-400 rounded-md bg-gray-100 dark:bg-[#1e1e1e] text-[#1e1e1e] dark:text-yellow-400 focus:outline-none focus:border-white focus:transform focus:scale-105 scale-100 transition-all"
             >
               <option value={1}>1 Credit Hour</option>
               <option value={2}>2 Credit Hours</option>
@@ -128,21 +148,12 @@ const CGPAPredictor = () => {
             </select>
             <input
               type="number"
-              placeholder="Sessional Marks (Max 25)"
-              value={subject.sessional}
-              onChange={(e) =>
-                handleInputChange(subject.id, "sessional", e.target.value)
-              }
-              className="w-1/4 p-2 border-2 border-yellow-400 dark:border-yellow-400 rounded-md bg-gray-100 dark:bg-[#1e1e1e] text-[#1e1e1e] dark:text-yellow-400 focus:outline-none focus:border-white focus:transform focus:scale-105 transition-all"
-            />
-            <input
-              type="number"
-              placeholder="Midterm Marks (Max 25)"
+              placeholder="Mids and Sessional Marks (Max 50)"
               value={subject.mid}
               onChange={(e) =>
                 handleInputChange(subject.id, "mid", e.target.value)
               }
-              className="w-1/4 p-2 border-2 border-yellow-400 dark:border-yellow-400 rounded-md bg-gray-100 dark:bg-[#1e1e1e] text-[#1e1e1e] dark:text-yellow-400 focus:outline-none focus:border-white focus:transform focus:scale-105 transition-all"
+              className="w-1/3 p-2 border-2 border-yellow-400 dark:border-yellow-400 rounded-md bg-gray-100 dark:bg-[#1e1e1e] text-[#1e1e1e] dark:text-yellow-400 focus:outline-none focus:border-white focus:transform focus:scale-105 transition-all"
             />
             <input
               type="number"
@@ -151,7 +162,7 @@ const CGPAPredictor = () => {
               onChange={(e) =>
                 handleInputChange(subject.id, "final", e.target.value)
               }
-              className="w-1/4 p-2 border-2 border-yellow-400 dark:border-yellow-400 rounded-md bg-gray-100 dark:bg-[#1e1e1e] text-[#1e1e1e] dark:text-yellow-400 focus:outline-none focus:border-white focus:transform focus:scale-105 transition-all"
+              className="w-1/3 p-2 border-2 border-yellow-400 dark:border-yellow-400 rounded-md bg-gray-100 dark:bg-[#1e1e1e] text-[#1e1e1e] dark:text-yellow-400 focus:outline-none focus:border-white focus:transform focus:scale-105 transition-all"
             />
             <button
               className="bg-red-500 text-white p-2 rounded-full ms-3 cursor-pointer border-none hover:bg-red-600 dark:hover:bg-red-600 transform transition-all duration-300"
@@ -167,7 +178,7 @@ const CGPAPredictor = () => {
         >
           Calculate CGPA
         </button>
-        <h2 className="text-center text-2xl text-[#1e1e1e] dark:text-yellow-400">
+        <h2 className="text-center text-2xl text-[#1e1e1e] dark:text-yellow-400 mt-32">
           Your CGPA: {cgpa}
         </h2>
         <div className="mt-10 bg-gray-100 dark:bg-[#1e1e1e] rounded-lg p-5 shadow-2xl">
@@ -176,6 +187,16 @@ const CGPAPredictor = () => {
             options={{ responsive: true, maintainAspectRatio: false }}
           />
         </div>
+        {cgpa > 0 && (
+          <div className="mt-10 flex justify-center">
+            <img
+              src={getMemeBasedOnCGPA()}
+              alt="Meme based on CGPA"
+              className="rounded-lg shadow-lg"
+              style={{ maxWidth: "500px", maxHeight: "300px" }}
+            />
+          </div>
+        )}
       </div>
       <Footer />
     </>
