@@ -1,11 +1,14 @@
 import logo from "../../assets/images/UEIT_Logo.png"
 import { FaSun } from "react-icons/fa6";
 import { FaMoon } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { document } from "postcss";
 
 const Header = () => {
     const [isDark, setIsDark] = useState(true)
     const [isActive, setIsActive] = useState(true)
+
+    useEffect(() => { document.documentElement.classList.add('dark') }, [])
 
     const handleThemeClick = () => {
         document.documentElement.classList.toggle('dark', isDark)
