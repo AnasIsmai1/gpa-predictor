@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
-import Footer from '../../components/Footer';
-import Header from '../../components/Header';
+import Footer from "../../components/Footer";
+import Header from "../../components/Header";
 import {
-    Chart as ChartJS, CategoryScale,
+    Chart as ChartJS,
+    CategoryScale,
     LinearScale,
     BarElement,
     Title,
@@ -11,9 +12,14 @@ import {
     Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import Excellent from "../../assets/images/Memes/maza-aaya.gif";
+import Good from "../../assets/images/Memes/2nd.gif";
+import Average from "../../assets/images/Memes/3rd.gif";
+import Poor from "../../assets/images/Memes/4th.gif";
 
 ChartJS.register(
-    CategoryScale, LinearScale,
+    CategoryScale,
+    LinearScale,
     BarElement,
     Title,
     Tooltip,
@@ -33,9 +39,10 @@ const CGPAPredictor = () => {
     };
 
     const handleInputChange = (id, field, value) => {
+        const validatedValue = Math.min(50, Math.max(value));
         setSubjects((prevSubjects) =>
             prevSubjects.map((subject) =>
-                subject.id === id ? { ...subject, [field]: value } : subject
+                subject.id === id ? { ...subject, [field]: validatedValue } : subject
             )
         );
     };
@@ -63,15 +70,15 @@ const CGPAPredictor = () => {
                                 : total > 68
                                     ? 2.7
                                     : total >= 64
-                                        ? 2.30
+                                        ? 2.3
                                         : total >= 60
-                                            ? 2.00
+                                            ? 2.0
                                             : total >= 57
-                                                ? 1.70
+                                                ? 1.7
                                                 : total >= 54
-                                                    ? 1.30
+                                                    ? 1.3
                                                     : total >= 50
-                                                        ? 1.00
+                                                        ? 1.0
                                                         : 0;
             totalPoints += grade * creditHours;
             totalCredits += creditHours;
@@ -89,30 +96,46 @@ const CGPAPredictor = () => {
                 label: "Grades",
                 data: grades.map((grade) => grade.grade),
                 backgroundColor: grades.map((grade) => {
-                    if (grade.grade >= 3.7) return "#4CAF50"; // A
-                    if (grade.grade >= 2.7) return "#FFC107"; // B
-                    if (grade.grade >= 1.7) return "#FF9800"; // C
-                    return "#F44336"; // F
+                    if (grade.grade >= 3.7) return "#4CAF50";
+                    if (grade.grade >= 2.7) return "#FFC107";
+                    if (grade.grade >= 1.7) return "#FF9800";
+                    if (grade.grade >= 1.0) return "#FF6023";
+                    return "#F44336";
                 }),
             },
         ],
     };
 
+    const getMemeBasedOnCGPA = () => {
+        if (cgpa >= 3.7) {
+            return Excellent;
+        } else if (cgpa >= 2.7) {
+            return Good;
+        } else if (cgpa >= 1.7) {
+            return Average;
+        } else {
+            return Poor;
+        }
+    };
+
     return (
         <>
             <Header />
-            {/* <div className="w-full max-w-7xl mx-auto my-5 p-10 bg-gray-100 dark:bg-[#1e1e1e] border-4 border-yellow-400 dark:border-yellow-400 text-[#1e1e1e] dark:text-yellow-400 rounded-lg shadow-2xl shadow-yellow-400"> */}
             <div className="container mx-auto my-10">
-                <h1 className="text-center font-bold text-5xl animate-fadeInDown text-yellow-400">CGPA Predictor</h1>
+                <h1 className="text-center font-bold text-5xl animate-fadeInDown dark:text-yellow-400">
+                    CGPA Predictor
+                </h1>
                 <button
                     className="block w-1/4 mx-auto my-4 p-2 bg-yellow-400 text-[#1e1e1e] dark:bg-yellow-400 dark:text-[#1e1e1e] font-bold uppercase rounded-md hover:bg-gray-100 dark:hover:bg-[#1e1e1e1e] hover:text-yellow-400 dark:hover:text-yellow-400  dark:hover:bg-[#1e1e1e] hover:shadow-lg transform transition-all duration-300"
                     onClick={handleAddSubject}
                 >
-                    <div className="bg-teal-300"></div>
                     Add Subject
                 </button>
                 {subjects.map((subject) => (
-                    <div key={subject.id} className="flex justify-between items-center gap-5 my-5">
+                    <div
+                        key={subject.id}
+                        className="flex justify-between items-center gap-5 my-5"
+                    >
                         <select
                             value={subject.creditHours}
                             onChange={(e) =>
@@ -126,7 +149,7 @@ const CGPAPredictor = () => {
                         </select>
                         <input
                             type="number"
-                            placeholder="Mids and Sessional Marks"
+                            placeholder="Mids and Sessional Marks (Max 50)"
                             value={subject.mid}
                             onChange={(e) =>
                                 handleInputChange(subject.id, "mid", e.target.value)
@@ -135,7 +158,7 @@ const CGPAPredictor = () => {
                         />
                         <input
                             type="number"
-                            placeholder="Final Marks"
+                            placeholder="Final Marks (Max 50)"
                             value={subject.final}
                             onChange={(e) =>
                                 handleInputChange(subject.id, "final", e.target.value)
@@ -147,7 +170,8 @@ const CGPAPredictor = () => {
                             onClick={() => handleDeleteSubject(subject.id)}
                         >
                             <RxCross2 size={22} />
-                        </button></div>
+                        </button>
+                    </div>
                 ))}
                 <button
                     className="block w-1/4 mx-auto my-4 p-2 bg-yellow-400 text-[#1e1e1e] dark:bg-yellow-400 dark:text-[#1e1e1e] font-bold uppercase rounded-md hover:bg-gray-100 dark:hover:bg-[#1e1e1e] hover:text-yellow-400 dark:hover:text-yellow-400 hover:shadow-lg transform transition-all duration-300"
@@ -155,13 +179,25 @@ const CGPAPredictor = () => {
                 >
                     Calculate CGPA
                 </button>
-                <h2 className="text-center text-2xl text-[#1e1e1e] dark:text-yellow-400 mt-32">Your CGPA: {cgpa}</h2>
+                <h2 className="text-center text-2xl text-[#1e1e1e] dark:text-yellow-400 mt-32">
+                    Your CGPA: {cgpa}
+                </h2>
                 <div className="mt-10 bg-gray-100 dark:bg-[#1e1e1e] rounded-lg p-5 shadow-2xl">
                     <Bar
                         data={chartData}
                         options={{ responsive: true, maintainAspectRatio: false }}
                     />
                 </div>
+                {cgpa > 0 && (
+                    <div className="mt-10 flex justify-center">
+                        <img
+                            src={getMemeBasedOnCGPA()}
+                            alt="Meme based on CGPA"
+                            className="rounded-lg shadow-lg"
+                            style={{ maxWidth: "500px", maxHeight: "300px" }}
+                        />
+                    </div>
+                )}
             </div>
             <Footer />
         </>
@@ -169,4 +205,3 @@ const CGPAPredictor = () => {
 };
 
 export default CGPAPredictor;
-
