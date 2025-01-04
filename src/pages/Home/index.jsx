@@ -152,7 +152,7 @@ const CGPAPredictor = () => {
                     CGPA Predictor
                 </h1>
                 <button
-                    className="block w-1/4 mx-auto my-4 p-2 bg-yellow-400 text-[#1e1e1e] dark:bg-yellow-400 dark:text-[#1e1e1e] font-bold uppercase rounded-md hover:bg-gray-100 dark:hover:bg-[#1e1e1e1e] hover:text-yellow-400 dark:hover:text-yellow-400  dark:hover:bg-[#1e1e1e] hover:shadow-lg transform transition-all duration-300"
+                    className="md:my-32 my-4 block w-[350px] mx-auto p-2 bg-yellow-400 text-[#1e1e1e] dark:bg-yellow-400 dark:text-[#1e1e1e] font-bold uppercase rounded-md hover:bg-gray-100 dark:hover:bg-[#1e1e1e1e] hover:text-yellow-400 dark:hover:text-yellow-400  dark:hover:bg-[#1e1e1e] hover:shadow-lg transform transition-all duration-300"
                     onClick={handleAddSubject}
                 >
                     Add Subject
@@ -160,14 +160,14 @@ const CGPAPredictor = () => {
                 {subjects.map((subject) => (
                     <div
                         key={subject.id}
-                        className="flex justify-between items-center gap-5 my-5"
+                        className="flex md:flex-row flex-col justify-center items-center gap-5 my-5"
                     >
                         <select
                             value={subject.creditHours}
                             onChange={(e) =>
                                 handleInputChange(subject.id, "creditHours", e.target.value)
                             }
-                            className="w-1/3 p-2 border-2 border-yellow-400 dark:border-yellow-400 rounded-md bg-gray-100 dark:bg-[#1e1e1e] text-[#1e1e1e] dark:text-yellow-400 focus:outline-none focus:border-white focus:transform focus:scale-105 scale-100 transition-all"
+                            className="w-[350px] p-2 border-2 border-yellow-400 dark:border-yellow-400 rounded-md bg-gray-100 dark:bg-[#1e1e1e] text-[#1e1e1e] dark:text-yellow-400 focus:outline-none focus:border-white focus:transform focus:scale-105 scale-100 transition-all"
                         >
                             <option value={1}>1 Credit Hour</option>
                             <option value={2}>2 Credit Hours</option>
@@ -180,7 +180,7 @@ const CGPAPredictor = () => {
                             onChange={(e) =>
                                 handleInputChange(subject.id, "mid", e.target.value)
                             }
-                            className="w-1/3 p-2 border-2 border-yellow-400 dark:border-yellow-400 rounded-md bg-gray-100 dark:bg-[#1e1e1e] text-[#1e1e1e] dark:text-yellow-400 focus:outline-none focus:border-white focus:transform focus:scale-105 transition-all"
+                            className="w-[350px] p-2 border-2 border-yellow-400 dark:border-yellow-400 rounded-md bg-gray-100 dark:bg-[#1e1e1e] text-[#1e1e1e] dark:text-yellow-400 focus:outline-none focus:border-white focus:transform focus:scale-105 transition-all"
                         />
                         <input
                             type="number"
@@ -189,7 +189,7 @@ const CGPAPredictor = () => {
                             onChange={(e) =>
                                 handleInputChange(subject.id, "final", e.target.value)
                             }
-                            className="w-1/3 p-2 border-2 border-yellow-400 dark:border-yellow-400 rounded-md bg-gray-100 dark:bg-[#1e1e1e] text-[#1e1e1e] dark:text-yellow-400 focus:outline-none focus:border-white focus:transform focus:scale-105 transition-all"
+                            className="w-[350px] p-2 border-2 border-yellow-400 dark:border-yellow-400 rounded-md bg-gray-100 dark:bg-[#1e1e1e] text-[#1e1e1e] dark:text-yellow-400 focus:outline-none focus:border-white focus:transform focus:scale-105 transition-all"
                         />
                         <button
                             className="bg-red-500 text-white p-2 rounded-full ms-3 cursor-pointer border-none hover:bg-red-600 dark:hover:bg-red-600 transform transition-all duration-300"
@@ -200,7 +200,7 @@ const CGPAPredictor = () => {
                     </div>
                 ))}
                 <button
-                    className="block w-1/4 mx-auto my-4 p-2 bg-yellow-400 text-[#1e1e1e] dark:bg-yellow-400 dark:text-[#1e1e1e] font-bold uppercase rounded-md hover:bg-gray-100 dark:hover:bg-[#1e1e1e] hover:text-yellow-400 dark:hover:text-yellow-400 hover:shadow-lg transform transition-all duration-300"
+                    className="block w-[350px] mx-auto my-4 p-2 bg-yellow-400 text-[#1e1e1e] dark:bg-yellow-400 dark:text-[#1e1e1e] font-bold uppercase rounded-md hover:bg-gray-100 dark:hover:bg-[#1e1e1e] hover:text-yellow-400 dark:hover:text-yellow-400 hover:shadow-lg transform transition-all duration-300"
                     onClick={calculateCGPA}
                 >
                     Calculate CGPA
@@ -210,7 +210,7 @@ const CGPAPredictor = () => {
                     <br />
                     <strong>Your Grade:</strong> {letter}
                 </h2>
-                <div className="mt-10 bg-gray-100 dark:bg-[#1e1e1e] rounded-lg p-5 shadow-2xl">
+                <div className="mt-10 bg-gray-100 dark:bg-[#1e1e1e] rounded-lg p-5 shadow-2xl md:w-full mx-auto w-[95%]">
                     <Bar
                         data={chartData}
                         options={chartOptions}
