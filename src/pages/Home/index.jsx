@@ -167,7 +167,7 @@ const CGPAPredictor = () => {
                             onChange={(e) =>
                                 handleInputChange(subject.id, "creditHours", e.target.value)
                             }
-                            className="w-[350px] p-2 border-2 border-yellow-400 dark:border-yellow-400 rounded-md bg-gray-100 dark:bg-[#1e1e1e] text-[#1e1e1e] dark:text-yellow-400 focus:outline-none focus:border-white focus:transform focus:scale-105 scale-100 transition-all"
+                            className="w-[350px] p-2 border-2 border-yellow-400 dark:border-yellow-400 rounded-md bg-gray-100 dark:bg-[#1e1e1e] text-[#1e1e1e] dark:text-yellow-400 focus:outline-none focus:border-white focus:transform focus:scale-105 scale-100 transition-all md:order-1 order-4"
                         >
                             <option value={1}>1 Credit Hour</option>
                             <option value={2}>2 Credit Hours</option>
@@ -180,7 +180,7 @@ const CGPAPredictor = () => {
                             onChange={(e) =>
                                 handleInputChange(subject.id, "mid", e.target.value)
                             }
-                            className="w-[350px] p-2 border-2 border-yellow-400 dark:border-yellow-400 rounded-md bg-gray-100 dark:bg-[#1e1e1e] text-[#1e1e1e] dark:text-yellow-400 focus:outline-none focus:border-white focus:transform focus:scale-105 transition-all"
+                            className="w-[350px] p-2 border-2 border-yellow-400 dark:border-yellow-400 rounded-md bg-gray-100 dark:bg-[#1e1e1e] text-[#1e1e1e] dark:text-yellow-400 focus:outline-none focus:border-white focus:transform focus:scale-105 transition-all order-2 md:order-2"
                         />
                         <input
                             type="number"
@@ -189,10 +189,10 @@ const CGPAPredictor = () => {
                             onChange={(e) =>
                                 handleInputChange(subject.id, "final", e.target.value)
                             }
-                            className="w-[350px] p-2 border-2 border-yellow-400 dark:border-yellow-400 rounded-md bg-gray-100 dark:bg-[#1e1e1e] text-[#1e1e1e] dark:text-yellow-400 focus:outline-none focus:border-white focus:transform focus:scale-105 transition-all"
+                            className="w-[350px] p-2 border-2 border-yellow-400 dark:border-yellow-400 rounded-md bg-gray-100 dark:bg-[#1e1e1e] text-[#1e1e1e] dark:text-yellow-400 focus:outline-none focus:border-white focus:transform focus:scale-105 transition-all order-3 md:order-3"
                         />
                         <button
-                            className="bg-red-500 text-white p-2 rounded-full ms-3 cursor-pointer border-none hover:bg-red-600 dark:hover:bg-red-600 transform transition-all duration-300"
+                            className="bg-red-500 text-white p-2 md:rounded-full md:w-fit w-[350px] order-1 text-center md:ms-3 ms-0 flex items-center flex-col cursor-pointer border-none hover:bg-red-600 dark:hover:bg-red-600 transform transition-all duration-300 md:order-4"
                             onClick={() => handleDeleteSubject(subject.id)}
                         >
                             <RxCross2 size={22} />
