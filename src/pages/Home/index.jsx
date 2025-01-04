@@ -29,6 +29,7 @@ ChartJS.register(
 const CGPAPredictor = () => {
     const [subjects, setSubjects] = useState([]);
     const [cgpa, setCGPA] = useState(0);
+    const [letter, setLetter] = useState('F')
     const [grades, setGrades] = useState([]);
 
     const handleAddSubject = () => {
@@ -51,43 +52,69 @@ const CGPAPredictor = () => {
         setSubjects(subjects.filter((subject) => subject.id !== id));
     };
 
+    const getGradeData = (total) => {
+        if (total >= 85) return { grade: 4.0, letterGrade: 'A' };
+        if (total >= 80) return { grade: 3.7, letterGrade: 'A-' };
+        if (total >= 75) return { grade: 3.3, letterGrade: 'B+' };
+        if (total >= 72) return { grade: 3.0, letterGrade: 'B' };
+        if (total >= 68) return { grade: 2.7, letterGrade: 'B-' };
+        if (total >= 64) return { grade: 2.3, letterGrade: 'C+' };
+        if (total >= 60) return { grade: 2.0, letterGrade: 'C' };
+        if (total >= 57) return { grade: 1.7, letterGrade: 'C-' };
+        if (total >= 50) return { grade: 1.0, letterGrade: 'D' };
+        return { grade: 0, letterGrade: 'F' };
+    };
+
     const calculateCGPA = () => {
+        if (subjects.length === 0) {
+            alert("Please add at least one subject!");
+            return;
+        }
+
         let totalPoints = 0;
         let totalCredits = 0;
         let newGrades = [];
 
         subjects.forEach(({ creditHours, mid, final }) => {
             const total = parseFloat(mid || 0) + parseFloat(final || 0);
-            const grade =
-                total > 85
-                    ? 4.0
-                    : total >= 80
-                        ? 3.7
-                        : total > 75
-                            ? 3.3
-                            : total >= 72
-                                ? 3.0
-                                : total > 68
-                                    ? 2.7
-                                    : total >= 64
-                                        ? 2.3
-                                        : total >= 60
-                                            ? 2.0
-                                            : total >= 57
-                                                ? 1.7
-                                                : total >= 54
-                                                    ? 1.3
-                                                    : total >= 50
-                                                        ? 1.0
-                                                        : 0;
+            const { grade, letterGrade } = getGradeData(total);
             totalPoints += grade * creditHours;
             totalCredits += creditHours;
-            newGrades.push({ subject: `Subject ${newGrades.length + 1}`, grade });
+            newGrades.push({ subject: `Subject ${newGrades.length + 1}`, grade, letterGrade });
         });
 
-        setCGPA(totalCredits ? (totalPoints / totalCredits).toFixed(2) : 0);
+        const total = totalCredits ? (totalPoints / totalCredits).toFixed(2) : 0;
+        setCGPA(total);
+
+        // Determine the letter grade directly based on the CGPA
+        if (total >= 3.7) setLetter("A");
+        else if (total >= 3.3) setLetter("B+");
+        else if (total >= 3.0) setLetter("B");
+        else if (total >= 2.7) setLetter("B-");
+        else if (total >= 2.3) setLetter("C+");
+        else if (total >= 2.0) setLetter("C");
+        else if (total >= 1.7) setLetter("C-");
+        else if (total >= 1.0) setLetter("D");
+        else setLetter("F");
+
         setGrades(newGrades);
     };
+
+    const chartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        const gradeIndex = context.dataIndex;
+                        const gradeData = grades[gradeIndex];
+                        return `Grade: ${gradeData.grade} (${gradeData.letterGrade})`;
+                    },
+                },
+            },
+        },
+    }
 
     const chartData = {
         labels: grades.map((grade) => grade.subject),
@@ -180,12 +207,14 @@ const CGPAPredictor = () => {
                     Calculate CGPA
                 </button>
                 <h2 className="text-center text-2xl text-[#1e1e1e] dark:text-yellow-400 mt-32">
-                    Your CGPA: {cgpa}
+                    <strong>Your CGPA:</strong> {cgpa}
+                    <br />
+                    <strong>Your Grade:</strong> {letter}
                 </h2>
                 <div className="mt-10 bg-gray-100 dark:bg-[#1e1e1e] rounded-lg p-5 shadow-2xl">
                     <Bar
                         data={chartData}
-                        options={{ responsive: true, maintainAspectRatio: false }}
+                        options={chartOptions}
                     />
                 </div>
                 {cgpa > 0 && (
