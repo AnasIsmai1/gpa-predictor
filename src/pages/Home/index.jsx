@@ -86,7 +86,6 @@ const CGPAPredictor = () => {
         const total = totalCredits ? (totalPoints / totalCredits).toFixed(2) : 0;
         setCGPA(total);
 
-        // Determine the letter grade directly based on the CGPA
         if (total >= 3.7) setLetter("A");
         else if (total >= 3.3) setLetter("B+");
         else if (total >= 3.0) setLetter("B");

@@ -16,7 +16,7 @@ const Header = () => {
 
     return (
         <header className="w-[95%] relative mx-auto py-4 flex items-center justify-between text-white dark:text-black">
-            <img src={logo} alt="KFUEIT Logo" className="w-[150px]" />
+            <img src={logo} alt="KFUEIT Logo" className="w-[65px]" />
             {/* <div className="absolute left-[50%] -translate-x-1/2"> */}
             {/*     <ul className="relative shadow-xl overflow-hidden list-none flex items-center justify-between gap-2 text-black bg-[rgba(255,255,255,0.8)] dark:text-white dark:bg-[rgba(0,0,0,0.8)] p-3 rounded-full w-[150px]"> */}
             {/*         <div className={`bg-gray-800 dark:bg-gray-300 h-[40px] w-[40%] rounded-full transition-all ease duration-150 absolute ${isActive ? 'left-1' : 'left-[57%]'} z-0`}></div> */}
