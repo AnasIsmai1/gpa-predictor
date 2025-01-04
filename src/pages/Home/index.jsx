@@ -192,7 +192,7 @@ const CGPAPredictor = () => {
                             className="w-[350px] p-2 border-2 border-yellow-400 dark:border-yellow-400 rounded-md bg-gray-100 dark:bg-[#1e1e1e] text-[#1e1e1e] dark:text-yellow-400 focus:outline-none focus:border-white focus:transform focus:scale-105 transition-all"
                         />
                         <button
-                            className="bg-red-500 text-white p-2 rounded-full ms-3 cursor-pointer border-none hover:bg-red-600 dark:hover:bg-red-600 transform transition-all duration-300"
+                            className="bg-red-500 text-white p-2 md:rounded-full md:w-fit w-full text-center md:ms-3 ms-0 flex items-center flex-col cursor-pointer border-none hover:bg-red-600 dark:hover:bg-red-600 transform transition-all duration-300"
                             onClick={() => handleDeleteSubject(subject.id)}
                         >
                             <RxCross2 size={22} />
