@@ -38,7 +38,7 @@ const Footer = () => {
                   <FaGithub size={24} />
                 </a>
                 <a
-                  href="https://www.linkedin.com/in/anas-ismail-9220b41b1?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                  href="https://www.linkedin.com/in/anas-ismail-9220b41b1?utm_source=share&amp;utm_campaign=share_via&amp;utm_content=profile&amp;utm_medium=android_app"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-400 hover:text-blue-700 transition duration-300"
@@ -53,7 +53,7 @@ const Footer = () => {
               <p className="font-medium text-lg mb-2">Hamza</p>
               <div className="flex justify-center space-x-6 mt-2">
                 <a
-                  href="https://www.instagram.com/its_h.a.r?igsh=bHZqd2J5N3d3Y3Jk"
+                  href="https://instagram.com/hamza"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-400 hover:text-pink-500 transition duration-300"
@@ -61,7 +61,7 @@ const Footer = () => {
                   <FaInstagram size={24} />
                 </a>
                 <a
-                  href="https://github.com/HHARC"
+                  href="https://github.com/hamza"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-400 hover:text-gray-300 transition duration-300"
@@ -69,7 +69,7 @@ const Footer = () => {
                   <FaGithub size={24} />
                 </a>
                 <a
-                  href="https://www.linkedin.com/in/hamza-abdul-rauf?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                  href="https://linkedin.com/in/hamza"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-400 hover:text-blue-700 transition duration-300"
