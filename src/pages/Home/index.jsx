@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import Footer from "../../components/Footer";
+import { toast, ToastContainer } from 'react-toastify'
 import Header from "../../components/Header";
 import {
     Chart as ChartJS,
@@ -67,7 +68,7 @@ const CGPAPredictor = () => {
 
     const calculateCGPA = () => {
         if (subjects.length === 0) {
-            alert("Please add at least one subject!");
+            toast.error("Please add at least one subject!");
             return;
         }
 
@@ -86,7 +87,8 @@ const CGPAPredictor = () => {
         const total = totalCredits ? (totalPoints / totalCredits).toFixed(2) : 0;
         setCGPA(total);
 
-        if (total >= 3.7) setLetter("A");
+        if (total == 4.0) setLetter("A");
+        else if (total >= 3.7) setLetter("A-");
         else if (total >= 3.3) setLetter("B+");
         else if (total >= 3.0) setLetter("B");
         else if (total >= 2.7) setLetter("B-");
@@ -126,7 +128,7 @@ const CGPAPredictor = () => {
                     if (grade.grade >= 2.7) return "#FFC107";
                     if (grade.grade >= 1.7) return "#FF9800";
                     if (grade.grade >= 1.0) return "#FF6023";
-                    return "#F44336";
+                    return "#FF4406";
                 }),
             },
         ],
@@ -146,8 +148,9 @@ const CGPAPredictor = () => {
 
     return (
         <>
+            <ToastContainer />
             <Header />
-            <div className="container mx-auto my-10">
+            <div className="container mx-auto md:my-10 my-20">
                 <h1 className="text-center font-bold text-5xl animate-fadeInDown dark:text-yellow-400">
                     CGPA Predictor
                 </h1>
@@ -167,32 +170,34 @@ const CGPAPredictor = () => {
                             onChange={(e) =>
                                 handleInputChange(subject.id, "creditHours", e.target.value)
                             }
-                            className="w-[350px] p-2 border-2 border-yellow-400 dark:border-yellow-400 rounded-md bg-gray-100 dark:bg-[#1e1e1e] text-[#1e1e1e] dark:text-yellow-400 focus:outline-none focus:border-white focus:transform focus:scale-105 scale-100 transition-all md:order-1 order-4"
+                            className="w-[350px]  min-w-[50px] flex-shrink-0 p-2 border-2 border-yellow-400 dark:border-yellow-400 rounded-md bg-gray-100 dark:bg-[#1e1e1e] text-[#1e1e1e] dark:text-yellow-400 focus:outline-none focus:border-white focus:transform focus:scale-105 scale-100 transition-all md:order-1 order-4"
                         >
                             <option value={1}>1 Credit Hour</option>
                             <option value={2}>2 Credit Hours</option>
                             <option value={3}>3 Credit Hours</option>
                         </select>
-                        <input
-                            type="number"
-                            placeholder="Mids and Sessional Marks (Max 50)"
-                            value={subject.mid}
-                            onChange={(e) =>
-                                handleInputChange(subject.id, "mid", e.target.value)
-                            }
-                            className="w-[350px] p-2 border-2 border-yellow-400 dark:border-yellow-400 rounded-md bg-gray-100 dark:bg-[#1e1e1e] text-[#1e1e1e] dark:text-yellow-400 focus:outline-none focus:border-white focus:transform focus:scale-105 transition-all order-2 md:order-2"
-                        />
-                        <input
-                            type="number"
-                            placeholder="Final Marks (Max 50)"
-                            value={subject.final}
-                            onChange={(e) =>
-                                handleInputChange(subject.id, "final", e.target.value)
-                            }
-                            className="w-[350px] p-2 border-2 border-yellow-400 dark:border-yellow-400 rounded-md bg-gray-100 dark:bg-[#1e1e1e] text-[#1e1e1e] dark:text-yellow-400 focus:outline-none focus:border-white focus:transform focus:scale-105 transition-all order-3 md:order-3"
-                        />
+                        <div className="flex flex-row gap-5 order-2">
+                            <input
+                                type="number"
+                                placeholder="Mids and Sessional Marks (Max 50)"
+                                value={subject.mid}
+                                onChange={(e) =>
+                                    handleInputChange(subject.id, "mid", e.target.value)
+                                }
+                                className="w-[350px] min-w-[50px] p-2 border-2 border-yellow-400 dark:border-yellow-400 rounded-md bg-gray-100 dark:bg-[#1e1e1e] text-[#1e1e1e] dark:text-yellow-400 focus:outline-none focus:border-white focus:transform focus:scale-105 transition-all order-2 md:order-2"
+                            />
+                            <input
+                                type="number"
+                                placeholder="Final Marks (Max 50)"
+                                value={subject.final}
+                                onChange={(e) =>
+                                    handleInputChange(subject.id, "final", e.target.value)
+                                }
+                                className="w-[350px] min-w-[50px] p-2 border-2 border-yellow-400 dark:border-yellow-400 rounded-md bg-gray-100 dark:bg-[#1e1e1e] text-[#1e1e1e] dark:text-yellow-400 focus:outline-none focus:border-white focus:transform focus:scale-105 transition-all order-3 md:order-3"
+                            />
+                        </div>
                         <button
-                            className="bg-red-500 text-white p-2 md:rounded-full md:w-fit w-[350px] order-1 text-center md:ms-3 ms-0 flex items-center flex-col cursor-pointer border-none hover:bg-red-600 dark:hover:bg-red-600 transform transition-all duration-300 md:order-4"
+                            className="bg-red-500 text-white p-2 md:rounded-full rounded-md  md:w-fit w-[350px] order-1 text-center md:ms-3 ms-0 flex items-center flex-col cursor-pointer border-none hover:bg-red-600 dark:hover:bg-red-600 transform transition-all duration-300 md:order-4"
                             onClick={() => handleDeleteSubject(subject.id)}
                         >
                             <RxCross2 size={22} />
