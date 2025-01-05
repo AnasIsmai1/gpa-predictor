@@ -155,7 +155,7 @@ const CGPAPredictor = () => {
                     CGPA Predictor
                 </h1>
                 <button
-                    className="md:my-2 my-4 block w-[350px] mx-auto p-2 bg-yellow-400 text-[#1e1e1e] dark:bg-yellow-400 dark:text-[#1e1e1e] font-bold uppercase rounded-md hover:bg-gray-100 dark:hover:bg-[#1e1e1e1e] hover:text-yellow-400 dark:hover:text-yellow-400  dark:hover:bg-[#1e1e1e] hover:shadow-lg transform transition-all duration-300"
+                    className="md:my-5 my-4 block w-[350px] mx-auto p-2 bg-yellow-400 text-[#1e1e1e] dark:bg-yellow-400 dark:text-[#1e1e1e] font-bold uppercase rounded-md hover:bg-gray-100 dark:hover:bg-[#1e1e1e1e] hover:text-yellow-400 dark:hover:text-yellow-400  dark:hover:bg-[#1e1e1e] hover:shadow-lg transform transition-all duration-300"
                     onClick={handleAddSubject}
                 >
                     Add Subject
